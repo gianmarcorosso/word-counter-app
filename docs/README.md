@@ -43,5 +43,7 @@ Questo comando conterà le parole nel file di esempio docs/text_file.txt e stamp
 ```bash
 npm test
 ```
+Please notice:
+URLs testing available, just uncomment lines in .test.ts
 Test text file:
 ../tests/wordCounterTXT.txt
