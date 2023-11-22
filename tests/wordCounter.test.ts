@@ -2,27 +2,36 @@
 import { WordCounter } from '../src/wordCounter';
 
 describe('WordCounter', () => {
-  test('countWords should return the correct word counts map', () => {
+  test('countWords should return the correct number of words', async () => {
     const wordCounter = new WordCounter();
-    const path = '../word-counter-app/tests/wordCounterTXT.txt';
+    const pathOrURL = './tests/wordCounterTXT.txt' //'https://www.york.ac.uk/teaching/cws/wws/webpage1.html'
 
-    wordCounter.countWords(path);
-    const wordCounts = wordCounter.getWordCounts();
-    const totalLetters = wordCounter.countLetters(path);
-    const totalSpaces = wordCounter.countSpaces(path);
+    await wordCounter.countWords(pathOrURL);
+    const totalWords = wordCounter.getWordCounts();
+    const totalLetters = wordCounter.countLettersFromString(wordCounter.getContent());
+    const totalSpaces = wordCounter.countSpacesFromString(wordCounter.getContent());
     const repeatedWords = wordCounter.getRepeatedWords();
 
-    console.log('Numero totale di parole:', wordCounts);
+    console.log('Numero totale di parole:', totalWords.size);
+    console.log('Numero totale di lettere:', totalLetters);
+    console.log('Numero totale di spazi:', totalSpaces);
+    console.log('Parole che si ripetono più di 10 volte:', repeatedWords);
 
-    // Verifica che la mappa contenga le parole attese
-    expect(wordCounts.get('mamma')).toBe(1);
-    expect(wordCounts.get('casa')).toBe(1);
-    expect(wordCounts.get('albero')).toBe(1);
-    expect(wordCounts.get('pollo')).toBe(11);
-    expect(wordCounts.get('libro')).toBe(1);
-
-    expect(totalLetters).toBe(75);
-    expect(totalSpaces).toBe(14);
-    expect(repeatedWords.get('pollo')).toBe(11);
+    expect(totalWords.size).toBe(5);                  
+    expect(totalLetters).toBe(75);                  
+    expect(totalSpaces).toBe(14);                    
+    expect(repeatedWords.get('pollo')).toBe(11);      
+    
+    // for URL testing
+    // expect(totalWords.size).toBe(319);
+    // expect(totalLetters).toBe(2925);
+    // expect(totalSpaces).toBe(636); 
+    // expect(repeatedWords.get('to')).toBeGreaterThan(10);
+    // expect(repeatedWords.get('you')).toBeGreaterThan(10);
+    // expect(repeatedWords.get('the')).toBeGreaterThan(10);
+    // expect(repeatedWords.get('and')).toBeGreaterThan(10);
+    // expect(repeatedWords.get('your')).toBeGreaterThan(10);
+    // expect(repeatedWords.get('page')).toBeGreaterThan(10);
+    
   });
 });

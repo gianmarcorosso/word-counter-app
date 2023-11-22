@@ -1,20 +1,28 @@
 // src/wordCounter.ts
 import { FileReader } from './utils/fileReader';
+import axios from 'axios';
 
 export class WordCounter {
   private fileReader: FileReader;
   private wordCounts: Map<string, number> = new Map();
+  private content: string = '';
 
   constructor() {
     this.fileReader = new FileReader();
   }
 
+  private cleanWord(word: string): string {
+    return word.replace(/[^a-zA-Z]/g, ''); // Rimuovi simboli e caratteri speciali dalla parola
+  }
+
   countWordsFromString(content: string): void {
+    this.content = content;
     const words = content.split(/\s+/).filter(word => word !== '');
 
     words.forEach(word => {
-      const currentCount = this.wordCounts.get(word) || 0;
-      this.wordCounts.set(word, currentCount + 1);
+      const cleanedWord = this.cleanWord(word);
+      const currentCount = this.wordCounts.get(cleanedWord) || 0;
+      this.wordCounts.set(cleanedWord, currentCount + 1);
     });
   }
 
@@ -28,33 +36,39 @@ export class WordCounter {
     return spaces;
   }
 
-  countWords(path: string): void {
-    const content = this.fileReader.readFile(path);
+  async countWords(pathOrURL: string): Promise<void> {
+    let content: string;
+
+    if (pathOrURL.startsWith('http://') || pathOrURL.startsWith('https://')) {
+      content = await this.fetchContentFromURL(pathOrURL);
+    } else {
+      content = this.fileReader.readFile(pathOrURL);
+    }
+
     this.countWordsFromString(content);
   }
 
-  countLetters(path: string): number {
-    const content = this.fileReader.readFile(path);
-    return this.countLettersFromString(content);
+  private async fetchContentFromURL(url: string): Promise<string> {
+    try {
+      const response = await axios.get(url);
+      return response.data;
+    } catch (error) {
+      console.error(`Errore durante il recupero del contenuto dall'URL: ${url}`);
+      throw error;
+    }
   }
 
-  countSpaces(path: string): number {
-    const content = this.fileReader.readFile(path);
-    return this.countSpacesFromString(content);
-  }
-
-  printResults(path: string): void {
-    const content = this.fileReader.readFile(path);
-
-    // Calcola il totale delle parole, anche quelle che si ripetono più di 10 volte
-    const totalWords = Array.from(this.wordCounts.values()).reduce((acc, count) => acc + count, 0);
-
-    console.log('Numero totale di parole:', totalWords);
-    console.log('Numero totale di lettere:', this.countLettersFromString(content));
-    console.log('Numero totale di spazi:', this.countSpacesFromString(content));
+  printResults(pathOrURL: string): void {
+    console.log('Numero totale di parole:', this.wordCounts.size);
+    console.log('Numero totale di lettere:', this.countLettersFromString(this.content));
+    console.log('Numero totale di spazi:', this.countSpacesFromString(this.content));
 
     const repeatedWords = this.getRepeatedWords();
     console.log('Parole che si ripetono più di 10 volte:', repeatedWords);
+  }
+
+  getContent(): string {
+    return this.content;
   }
 
   getWordCounts(): Map<string, number> {
@@ -72,10 +86,10 @@ export class WordCounter {
   }
 }
 
-// Esegui il conteggio al lancio dello script se viene fornito un percorso
 if (process.argv.length >= 3) {
   const path = process.argv[2];
   const wordCounter = new WordCounter();
-  wordCounter.countWords(path);
-  wordCounter.printResults(path);
+  wordCounter.countWords(path).then(() => {
+    wordCounter.printResults(path);
+  });
 }
