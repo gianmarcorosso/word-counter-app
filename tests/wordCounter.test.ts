@@ -12,10 +12,10 @@ describe('WordCounter', () => {
     const totalSpaces = wordCounter.countSpacesFromString(wordCounter.getContent());
     const repeatedWords = wordCounter.getRepeatedWords();
 
-    console.log('Numero totale di parole:', totalWords.size);
-    console.log('Numero totale di lettere:', totalLetters);
-    console.log('Numero totale di spazi:', totalSpaces);
-    console.log('Parole che si ripetono più di 10 volte:', repeatedWords);
+    console.log('Total number of words:', totalWords.size);
+    console.log('Total number of letters:', totalLetters);
+    console.log('Total number of spaces:', totalSpaces);
+    console.log('Words repeated more than 10 times:', repeatedWords);
 
     expect(totalWords.size).toBe(5);                  
     expect(totalLetters).toBe(75);                  

@@ -9,6 +9,6 @@ export class WordCounterObserver implements Observer {
   }
 
   update(data: any): void {
-    console.log(`Numero totale di parole nel file: ${data}`);
+    console.log(`Words total in file: ${data}`);
   }
 }

@@ -1,42 +1,42 @@
 # Word Counter App
 
-Questo è un'applicazione Node.js che conta il numero di parole, lettere e spazi in un file di testo. Può anche identificare le parole che si ripetono più di 10 volte.
+This is a Node.js application that counts the number of words, letters, and spaces in a text file. It can also identify words that are repeated more than 10 times.
 
-## Prerequisiti
+## Prerequisites
 
-Assicurati di avere Node.js installato sulla tua macchina. Puoi scaricarlo da [https://nodejs.org/](https://nodejs.org/).
+Make sure you have Node.js installed on your machine. You can download it from https://nodejs.org/.
 
-## Installazione
+## Installation
 
-1. Clona questo repository sul tuo computer:
+1. Clone this repository to your computer:
 
    ```bash
    git clone https://github.com/gianmarcorosso/word-counter-app.git
 
-2. Naviga nella directory del progetto:
+2. Navigate to the project directory:
    ```bash
    cd word-counter-app
 
-3. Installa le dipendenze:
+3. Install the dependencies:
    ```bash
    npm install
 
-## Utilizzo
+## Usage
 
-Per contare le parole, lettere e spazi in un file di testo, esegui il seguente comando nella tua console:
+To count the words, letters, and spaces in a text file, run the following command in your console:
 ```bash
 npm start path/al/tuo/file.txt
 ```
-Sostituisci path/al/tuo/file.txt con il percorso del tuo file di testo.
+Replace path/to/your/file.txt with the path to your text file.
 
-L'applicazione stamperà quindi le statistiche nel terminale.
+The application will then print the statistics in the terminal.
 
-## Esempio di utilizzo
+## Example usage
 
 ```bash
 npm start docs/text_file.txt
 ```
-Questo comando conterà le parole nel file di esempio docs/text_file.txt e stamperà i risultati nel terminale.
+This command will count the words in the example file docs/text_file.txt and print the results in the terminal.
 
 ### Testing
 

@@ -12,7 +12,7 @@ export class WordCounter {
   }
 
   private cleanWord(word: string): string {
-    return word.replace(/[^a-zA-Z]/g, ''); // Rimuovi simboli e caratteri speciali dalla parola
+    return word.replace(/[^a-zA-Z]/g, ''); // Remove symbols and special characters from the word.
   }
 
   countWordsFromString(content: string): void {
@@ -27,7 +27,7 @@ export class WordCounter {
   }
 
   countLettersFromString(content: string): number {
-    const letters = content.replace(/[^a-zA-Z]/g, ''); // Rimuovi tutto tranne le lettere
+    const letters = content.replace(/[^a-zA-Z]/g, ''); // Remove everything except the letters.
     return letters.length;
   }
 
@@ -53,18 +53,18 @@ export class WordCounter {
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
-      console.error(`Errore durante il recupero del contenuto dall'URL: ${url}`);
+      console.error(`Error while retrieving content from the URL: ${url}`);
       throw error;
     }
   }
 
   printResults(pathOrURL: string): void {
-    console.log('Numero totale di parole:', this.wordCounts.size);
-    console.log('Numero totale di lettere:', this.countLettersFromString(this.content));
-    console.log('Numero totale di spazi:', this.countSpacesFromString(this.content));
+    console.log('Total number of words:', this.wordCounts.size);
+    console.log('Total number of letters:', this.countLettersFromString(this.content));
+    console.log('Total number of paces:', this.countSpacesFromString(this.content));
 
     const repeatedWords = this.getRepeatedWords();
-    console.log('Parole che si ripetono più di 10 volte:', repeatedWords);
+    console.log('Words repeated more than 10 times:', repeatedWords);
   }
 
   getContent(): string {
